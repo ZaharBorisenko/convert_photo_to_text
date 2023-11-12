@@ -1,5 +1,5 @@
 import {Route, Routes} from "react-router";
-import {AboutProject, Home} from "pages";
+import {AboutProject, History, Home} from "pages";
 
 export const App = () => {
     return (
@@ -7,6 +7,7 @@ export const App = () => {
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/about" element={<AboutProject/>}/>
+                <Route path="/history" element={<History/>}/>
             </Routes>
         </div>
     )

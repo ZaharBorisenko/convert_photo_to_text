@@ -13,6 +13,8 @@ export const Layout = ({children} : {children: React.ReactNode}) => {
 };
 
 const LayoutContainer = styled.div`
+  max-width: 1000px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   min-height: 100vh;

@@ -1,9 +1,9 @@
-import {Layout} from "components";
+import {Info, Layout} from "components";
 
 export const Home = () => {
     return (
         <Layout>
-            главная страница
+            <Info/>
         </Layout>
     );
 };

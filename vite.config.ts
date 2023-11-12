@@ -10,8 +10,8 @@ export default defineConfig({
             common: '/src/common',
             components: '/src/components',
             pages: '/src/pages',
-            ui: 'src/ui',
-            store: 'src/store',
+            ui: '/src/ui',
+            store: '/src/store',
         }
     },
 })
