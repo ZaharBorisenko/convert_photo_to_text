@@ -1,20 +1,48 @@
 import styled from "styled-components";
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
+import {SvgUpload} from "ui/svg";
+import {useAppDispatch} from "store/hook.ts";
+import {setFile} from "store/Slice/InfoSlice.ts";
 
-export const SectionUpload = ({handleClickImage} : {handleClickImage: (e: React.ChangeEvent<HTMLInputElement>) => void}) => {
+export const SectionUpload = ({handleClickImage}: {
+    handleClickImage: (e: React.ChangeEvent<HTMLInputElement>) => void
+}) => {
     const uploadFile = useRef<HTMLInputElement | null>(null);
+    const dispatch = useAppDispatch()
+    const [drag, setDrag] = useState<boolean>(false);
+    const dragStartHandler = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setDrag(true);
+    }
+
+    const dragLeaveHandler = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setDrag(false);
+    }
+
+    const dragOverHandler = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setDrag(true);
+    }
+
+    const dropHandler = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setDrag(false);
+        const files = e.dataTransfer.files[0];
+        dispatch(setFile(files))
+    }
     return (
         <div>
-            <ScreenUploads onClick={() => uploadFile.current?.click()}>
-                <SvgUpload data-v-abfb9cc5="" xmlns="http://www.w3.org/2000/svg" fill="none"
-                           viewBox="0 0 24 24"
-                           stroke="#fff">
-                    <path data-v-abfb9cc5="" strokeLinecap="round" strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
-                    </path>
-                </SvgUpload>
-                <TextUpload>Нажмите, чтобы загрузить изображение</TextUpload>
+            <ScreenUploads
+                onDragStart={e => dragStartHandler(e)}
+                onDragLeave={e => dragLeaveHandler(e)}
+                onDragOver={e => dragOverHandler(e)}
+                onDrop={e => dropHandler(e)}
+                onClick={() => uploadFile.current?.click()}
+            >
+                <SvgUpload/>
+                {!drag && <TextUpload>Выберите или перетащите изображение😊</TextUpload>}
+                {drag && <TextUpload>Отпускайте файл, мы его поймаем😎🤲</TextUpload>}
             </ScreenUploads>
             <input
                 style={{display: "none"}}
@@ -26,34 +54,11 @@ export const SectionUpload = ({handleClickImage} : {handleClickImage: (e: React.
     );
 };
 const TextUpload = styled.div`
-  font-size: 20px;
+  font-size: 24px;
   margin-top: 20px;
   margin-bottom: 30px;
   color: #fff;
   font-weight: 600;
-`
-const SvgUpload = styled("svg")`
-  width: 120px;
-  height: 120px;
-  animation: hithere 5s infinite;
-
-  @keyframes hithere {
-    30% {
-      transform: scale(1.2);
-    }
-    40%, 60% {
-      transform: rotate(-20deg) scale(1.2);
-    }
-    50% {
-      transform: rotate(20deg) scale(1.2);
-    }
-    70% {
-      transform: rotate(0deg) scale(1.2);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
 `
 const ScreenUploads = styled.div`
   background-color: #ff81d5;

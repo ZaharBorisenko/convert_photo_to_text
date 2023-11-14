@@ -22,6 +22,10 @@ const WrapperImg = styled.div`
   border: 2px solid #36BE49;
   text-align: center;
   position: relative;
+  img{
+    width: 100%;
+    border-radius: 10px;
+  }
 `
 
 const DeleteButton = styled.div`
