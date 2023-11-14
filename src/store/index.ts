@@ -1,7 +1,10 @@
 import {configureStore} from "@reduxjs/toolkit";
+import infoSlice from "store/Slice/InfoSlice.ts";
 
 const store = configureStore({
-    reducer : {}
+    reducer : {
+        info: infoSlice,
+    }
 });
 
 export default store
