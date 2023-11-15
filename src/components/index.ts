@@ -6,4 +6,5 @@ export {UploadForm} from './uploadForm'
 export {SectionUpload} from './sectionUpload'
 export {ResultImg} from './sectionResultImg'
 export {ResultText} from './sectionResultText'
+export {SelectLanguage} from './SelectLanguage'
 

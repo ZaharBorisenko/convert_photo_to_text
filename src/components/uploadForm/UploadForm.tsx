@@ -8,8 +8,9 @@ export const UploadForm = () => {
     const dispatch = useAppDispatch()
     const selectedImage = useAppSelector(state => state.info.selectedImage);
     const resultText = useAppSelector(state => state.info.resultText);
+    const language = useAppSelector(state => state.info.language)!;
     const convertImageToText = async () => {
-        const worker = await createWorker('rus');
+        const worker = await createWorker(language);
         const ret = await worker.recognize(selectedImage);
         dispatch(setResultText(ret.data.text));
         await worker.terminate();
@@ -19,8 +20,13 @@ export const UploadForm = () => {
         const selectedImage = e.target.files[0]
         dispatch(setFile(selectedImage))
     }
+    const handleClickConvert = () => {
+        if (language === null) alert('Выберите язык!')
+        if (selectedImage === null) alert('Выберите фотографию!')
+        if (selectedImage && language) convertImageToText();
+    }
     useEffect(() => {
-        if (selectedImage) convertImageToText()
+        if (selectedImage && language) convertImageToText()
     }, [selectedImage]);
     return (
         <Wrapper>
@@ -28,6 +34,7 @@ export const UploadForm = () => {
                 {!selectedImage ? <SectionUpload handleClickImage={handleClickImage}/> : <ResultImg/>}
             </div>
             {resultText && <ResultText/>}
+            <button onClick={() => handleClickConvert()}>Конвертировать</button>
         </Wrapper>
     );
 };

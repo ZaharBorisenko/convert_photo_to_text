@@ -3,11 +3,13 @@ import {createSlice, Draft} from "@reduxjs/toolkit";
 type infoState = {
     selectedImage: File | null,
     resultText: string | null,
+    language: string | null,
 }
 
 const initialState: infoState = {
     selectedImage: null,
     resultText: null,
+    language: null,
 }
 
 const infoSlice = createSlice({
@@ -23,9 +25,12 @@ const infoSlice = createSlice({
         clearInfo: (state: Draft<infoState>) => {
             state.resultText = null;
             state.selectedImage = null;
-        }
+        },
+        setLanguage: (state:Draft<infoState>, action) => {
+            state.language = action.payload
+        },
     }
 })
 
-export const {setFile,setResultText, clearInfo} = infoSlice.actions;
+export const {setFile,setResultText, clearInfo, setLanguage} = infoSlice.actions;
 export default infoSlice.reducer

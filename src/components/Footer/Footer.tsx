@@ -17,6 +17,7 @@ export const Footer = () => {
 };
 
 const Wrapper = styled.div`
+  margin-top: 50px;
   display: flex;
   justify-content: center;
   gap: 0 50px;
