@@ -34,12 +34,25 @@ export const UploadForm = () => {
                 {!selectedImage ? <SectionUpload handleClickImage={handleClickImage}/> : <ResultImg/>}
             </div>
             {resultText && <ResultText/>}
-            <button onClick={() => handleClickConvert()}>Конвертировать</button>
+
+            <Button onClick={() => handleClickConvert()}>Конвертировать</Button>
         </Wrapper>
     );
 };
 
 const Wrapper = styled.div`
   text-align: center;
+`
+const Button = styled.button`
+  margin-top: 40px;
+  font-size: 20px;
+  border-radius: 5px;
+  padding: 10px 30px;
+  font-weight: 600;
+  color: #5d1f57;
+  background-color: #82abed;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 30px;
 `
 

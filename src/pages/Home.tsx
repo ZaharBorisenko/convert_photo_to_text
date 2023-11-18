@@ -4,8 +4,8 @@ export const Home = () => {
     return (
         <Layout>
             <Info/>
-            <UploadForm/>
             <SelectLanguage/>
+            <UploadForm/>
         </Layout>
     );
 };
