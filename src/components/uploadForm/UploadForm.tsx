@@ -3,11 +3,12 @@ import {createWorker} from "tesseract.js";
 import styled from "styled-components";
 import {useAppDispatch, useAppSelector} from "store/hook.ts";
 import {setFile, setResultText} from "store/Slice/InfoSlice.ts";
-import {SectionUpload, ResultText, ResultImg} from "components";
+import {SectionUpload, ResultImg} from "components";
+import {useNavigate} from "react-router-dom";
 export const UploadForm = () => {
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const selectedImage = useAppSelector(state => state.info.selectedImage);
-    const resultText = useAppSelector(state => state.info.resultText);
     const language = useAppSelector(state => state.info.language)!;
     const convertImageToText = async () => {
         const worker = await createWorker(language);
@@ -24,16 +25,20 @@ export const UploadForm = () => {
         if (language === null) alert('Выберите язык!')
         if (selectedImage === null) alert('Выберите фотографию!')
         if (selectedImage && language) convertImageToText();
+        navigate("/result");
     }
     useEffect(() => {
-        if (selectedImage && language) convertImageToText()
+        if (selectedImage && language) {
+            convertImageToText()
+            navigate("/result")
+        }
     }, [selectedImage]);
     return (
         <Wrapper>
             <div>
                 {!selectedImage ? <SectionUpload handleClickImage={handleClickImage}/> : <ResultImg/>}
             </div>
-            {resultText && <ResultText/>}
+            {/*{resultText && <ResultText/>}*/}
 
             <Button onClick={() => handleClickConvert()}>Конвертировать</Button>
         </Wrapper>
