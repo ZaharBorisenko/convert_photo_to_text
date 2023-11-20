@@ -24,8 +24,10 @@ export const UploadForm = () => {
     const handleClickConvert = () => {
         if (language === null) alert('Выберите язык!')
         if (selectedImage === null) alert('Выберите фотографию!')
-        if (selectedImage && language) convertImageToText();
-        navigate("/result");
+        if (selectedImage && language) {
+            convertImageToText();
+            navigate("/result");
+        }
     }
     useEffect(() => {
         if (selectedImage && language) {
