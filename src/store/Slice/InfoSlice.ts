@@ -4,12 +4,14 @@ type infoState = {
     selectedImage: File | null,
     resultText: string | null,
     language: string | null,
+    statusText: string | null,
 }
 
 const initialState: infoState = {
     selectedImage: null,
     resultText: null,
     language: null,
+    statusText: null,
 }
 
 const infoSlice = createSlice({
@@ -29,8 +31,11 @@ const infoSlice = createSlice({
         setLanguage: (state:Draft<infoState>, action) => {
             state.language = action.payload
         },
+        setStatus: (state:Draft<infoState>, action) => {
+            state.statusText = action.payload
+        }
     }
 })
 
-export const {setFile,setResultText, clearInfo, setLanguage} = infoSlice.actions;
+export const {setFile,setResultText, clearInfo, setLanguage, setStatus} = infoSlice.actions;
 export default infoSlice.reducer

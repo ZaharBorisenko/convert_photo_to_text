@@ -7,6 +7,8 @@ import copy from 'assets/copy.png'
 export const ResultText = () => {
     const dispatch = useAppDispatch();
     const resultText = useAppSelector(state => state.info.resultText)!;
+    const statusText = useAppSelector(state => state.info.statusText)
+    console.log(statusText)
     const handleCopy = () => {
         navigator.clipboard.writeText(resultText)
         alert('Текст скопирован')
@@ -16,6 +18,7 @@ export const ResultText = () => {
             <Text>Результат распознавания</Text>
             <Subtext>Если в тексте ошибка - отредактируйте его прямо на сайте</Subtext>
             <ContainerTextarea>
+
                 {resultText ?
                     <EditInput
 
@@ -29,6 +32,9 @@ export const ResultText = () => {
 
                     </NoResult>
                 }
+
+
+
                 <div>
                     <Wrapper>
                         <Img src={copy} alt=""/>

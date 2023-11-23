@@ -1,8 +1,8 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {createWorker} from "tesseract.js";
 import styled from "styled-components";
 import {useAppDispatch, useAppSelector} from "store/hook.ts";
-import {setFile, setResultText} from "store/Slice/InfoSlice.ts";
+import {setFile, setResultText, setStatus} from "store/Slice/InfoSlice.ts";
 import {SectionUpload, ResultImg} from "components";
 import {useNavigate} from "react-router-dom";
 export const UploadForm = () => {
@@ -13,8 +13,10 @@ export const UploadForm = () => {
     const convertImageToText = async () => {
         const worker = await createWorker(language);
         const ret = await worker.recognize(selectedImage);
+        dispatch(setStatus('loading'));
         dispatch(setResultText(ret.data.text));
         await worker.terminate();
+        dispatch(setStatus('loaded'));
     }
     const handleClickImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) return
@@ -29,18 +31,17 @@ export const UploadForm = () => {
             navigate("/result");
         }
     }
-    useEffect(() => {
-        if (selectedImage && language) {
-            convertImageToText()
-            navigate("/result")
-        }
-    }, [selectedImage]);
+    // useEffect(() => {
+    //     if (selectedImage && language) {
+    //         convertImageToText()
+    //         navigate("/result")
+    //     }
+    // }, [selectedImage]);
     return (
         <Wrapper>
             <div>
                 {!selectedImage ? <SectionUpload handleClickImage={handleClickImage}/> : <ResultImg/>}
             </div>
-            {/*{resultText && <ResultText/>}*/}
 
             <Button onClick={() => handleClickConvert()}>Конвертировать</Button>
         </Wrapper>
