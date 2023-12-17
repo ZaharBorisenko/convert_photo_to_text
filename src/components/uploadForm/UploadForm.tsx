@@ -5,6 +5,7 @@ import {useAppDispatch, useAppSelector} from "store/hook.ts";
 import {setFile, setResultText, setStatus} from "store/Slice/InfoSlice.ts";
 import {SectionUpload, ResultImg} from "components";
 import {useNavigate} from "react-router-dom";
+import { toast } from 'react-toastify';
 export const UploadForm = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
@@ -24,19 +25,19 @@ export const UploadForm = () => {
         dispatch(setFile(selectedImage))
     }
     const handleClickConvert = () => {
-        if (language === null) alert('Выберите язык!')
-        if (selectedImage === null) alert('Выберите фотографию!')
+        if (language === null) {
+            toast.warning('Выберите язык!', {position:'top-center', autoClose: 2000});
+            return;
+        }
+        if (selectedImage === null) {
+            toast.warning('Загрузите фотографию!', {position:'top-center', autoClose: 2000});
+            return;
+        }
         if (selectedImage && language) {
             convertImageToText();
             navigate("/result");
         }
     }
-    // useEffect(() => {
-    //     if (selectedImage && language) {
-    //         convertImageToText()
-    //         navigate("/result")
-    //     }
-    // }, [selectedImage]);
     return (
         <Wrapper>
             <div>

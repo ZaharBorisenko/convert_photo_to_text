@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-export const Button = ({text, handleClick}: { text: string, handleClick: () => void }) => {
-    return (
-        <Btn onClick={handleClick}>{text}</Btn>
-    );
+export const Button = ({ text, handleClick }: { text: string, handleClick: () => void }) => {
+  return (
+    <Btn onClick={handleClick}>{text}</Btn>
+  );
 };
 
 const Btn = styled.button`
@@ -16,4 +16,4 @@ const Btn = styled.button`
   background-color: #f7a9dd;
   color: #3e273d;
   padding: 15px 20px 15px 40px;
-`
+`;
