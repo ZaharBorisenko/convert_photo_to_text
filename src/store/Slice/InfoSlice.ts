@@ -1,15 +1,22 @@
 import {createSlice, Draft} from "@reduxjs/toolkit";
 
+type result = {
+    id: string,
+    text: string
+}
+
 type infoState = {
     selectedImage: File | null,
-    resultText: string | null,
+    result: result | null,
+    resultData: result[] | null
     language: string | null,
     statusText: string | null,
 }
 
 const initialState: infoState = {
     selectedImage: null,
-    resultText: null,
+    result: null,
+    resultData: [],
     language: null,
     statusText: null,
 }
@@ -22,10 +29,12 @@ const infoSlice = createSlice({
             state.selectedImage = action.payload
         },
         setResultText: (state:Draft<infoState>, action) => {
-            state.resultText = action.payload
+            state.result = action.payload
+            // @ts-ignore
+            state.resultData = [...state.resultData, action.payload]
         },
         clearInfo: (state: Draft<infoState>) => {
-            state.resultText = null;
+            state.result = null;
             state.selectedImage = null;
         },
         setLanguage: (state:Draft<infoState>, action) => {

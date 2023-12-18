@@ -1,48 +1,39 @@
-import { setResultText } from 'store/Slice/InfoSlice.ts';
+import {setResultText} from 'store/Slice/InfoSlice.ts';
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from 'store/hook.ts';
-import { Button } from 'ui/Button';
+import {useAppDispatch, useAppSelector} from 'store/hook.ts';
+import {Button} from 'ui/Button';
 import copy from 'assets/copy.png';
 import preloader from 'assets/preloader.gif';
+import {useEffect, useState} from "react";
 
 export const ResultText = () => {
-  const dispatch = useAppDispatch();
-  const resultText = useAppSelector(state => state.info.resultText)!;
-  const statusText = useAppSelector(state => state.info.statusText);
-  console.log(statusText);
-  const handleCopy = () => {
-    navigator.clipboard.writeText(resultText);
-    alert('Текст скопирован');
-  };
-  return (
-    <div>
-      <Text>Результат распознавания</Text>
-      <Subtext>Если в тексте ошибка - отредактируйте его прямо на сайте</Subtext>
-      <ContainerTextarea>
-
-        {resultText ?
-          <EditInput
-
-            autoFocus={true}
-            value={resultText}
-            onChange={(e) => {
-              dispatch(setResultText(e.target.value));
-            }}
-          /> :
-          <NoResult>
-            <img src={preloader} alt='loading...' />
-          </NoResult>
-        }
-
+    const dispatch = useAppDispatch();
+    const result = useAppSelector(state => state.info.result)!;
+    const handleCopy = () => {
+        navigator.clipboard.writeText(result.text);
+        alert('Текст скопирован');
+    };
+    return (
         <div>
-          <Wrapper>
-            <Img src={copy} alt='' />
-            <Button text='Скопировать' handleClick={handleCopy} />
-          </Wrapper>
+            <Text>Результат распознавания</Text>
+            <Subtext>Если в тексте ошибка - отредактируйте его прямо на сайте</Subtext>
+            <ContainerTextarea>
+                {!result &&
+                    <NoResult>
+                        <img src={preloader} alt='loading...'/>
+                    </NoResult>
+                }
+                {result && <div>{result.text}</div>}
+
+                <div>
+                    <Wrapper>
+                        <Img src={copy} alt=''/>
+                        <Button text='Скопировать' handleClick={handleCopy}/>
+                    </Wrapper>
+                </div>
+            </ContainerTextarea>
         </div>
-      </ContainerTextarea>
-    </div>
-  );
+    );
 };
 
 const Wrapper = styled.div`

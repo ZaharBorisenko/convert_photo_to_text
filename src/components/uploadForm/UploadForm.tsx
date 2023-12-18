@@ -5,17 +5,26 @@ import {useAppDispatch, useAppSelector} from "store/hook.ts";
 import {setFile, setResultText, setStatus} from "store/Slice/InfoSlice.ts";
 import {SectionUpload, ResultImg} from "components";
 import {useNavigate} from "react-router-dom";
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
+import {v4} from 'uuid'
+
 export const UploadForm = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const selectedImage = useAppSelector(state => state.info.selectedImage);
     const language = useAppSelector(state => state.info.language)!;
+    const resultData = useAppSelector(state => state.info.resultData);
+    console.log(resultData)
     const convertImageToText = async () => {
         const worker = await createWorker(language);
         const ret = await worker.recognize(selectedImage);
         dispatch(setStatus('loading'));
-        dispatch(setResultText(ret.data.text));
+        dispatch(setResultText(
+            {
+                id: v4(),
+                text: ret.data.text,
+            }
+        ));
         await worker.terminate();
         dispatch(setStatus('loaded'));
     }
@@ -26,11 +35,11 @@ export const UploadForm = () => {
     }
     const handleClickConvert = () => {
         if (language === null) {
-            toast.warning('Выберите язык!', {position:'top-center', autoClose: 2000});
+            toast.warning('Выберите язык!', {position: 'top-center', autoClose: 2000});
             return;
         }
         if (selectedImage === null) {
-            toast.warning('Загрузите фотографию!', {position:'top-center', autoClose: 2000});
+            toast.warning('Загрузите фотографию!', {position: 'top-center', autoClose: 2000});
             return;
         }
         if (selectedImage && language) {
