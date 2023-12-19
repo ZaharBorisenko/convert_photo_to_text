@@ -1,13 +1,10 @@
-import {setResultText} from 'store/Slice/InfoSlice.ts';
 import styled from 'styled-components';
-import {useAppDispatch, useAppSelector} from 'store/hook.ts';
+import {useAppSelector} from 'store/hook.ts';
 import {Button} from 'ui/Button';
 import copy from 'assets/copy.png';
 import preloader from 'assets/preloader.gif';
-import {useEffect, useState} from "react";
 
 export const ResultText = () => {
-    const dispatch = useAppDispatch();
     const result = useAppSelector(state => state.info.result)!;
     const handleCopy = () => {
         navigator.clipboard.writeText(result.text);
@@ -59,16 +56,6 @@ const Subtext = styled.div`
   margin-bottom: 20px;
   color: #808080;
   font-size: 18px;
-`;
-const EditInput = styled.textarea`
-  width: 100%;
-  height: 600px;
-  padding: 5px 10px;
-  resize: none;
-  border-radius: 3px;
-  border: 1px solid #808080;
-  outline: none;
-  font-size: 16px;
 `;
 const ContainerTextarea = styled.div`
   display: flex;
