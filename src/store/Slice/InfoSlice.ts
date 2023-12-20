@@ -1,6 +1,6 @@
 import {createSlice, Draft} from "@reduxjs/toolkit";
 
-type result = {
+export type result = {
     id: string,
     text: string
 }

@@ -13,8 +13,6 @@ export const UploadForm = () => {
     const dispatch = useAppDispatch()
     const selectedImage = useAppSelector(state => state.info.selectedImage);
     const language = useAppSelector(state => state.info.language)!;
-    const resultData = useAppSelector(state => state.info.resultData);
-    console.log(resultData)
     const convertImageToText = async () => {
         const worker = await createWorker(language);
         const ret = await worker.recognize(selectedImage);
