@@ -3,14 +3,10 @@ import {useAppSelector} from 'store/hook.ts';
 import {Button} from 'ui/Button';
 import copy from 'assets/copy.png';
 import preloader from 'assets/preloader.gif';
-import {toast} from "react-toastify";
+import {handleCopy} from "common/utils/CopyText.ts";
 
 export const ResultText = () => {
     const result = useAppSelector(state => state.info.result)!;
-    const handleCopy = () => {
-        navigator.clipboard.writeText(result.text);
-        toast.success('Текст скопирован', {autoClose: 2000});
-    };
     return (
         <div>
             <Text>Результат распознавания</Text>
@@ -26,7 +22,7 @@ export const ResultText = () => {
                 <div>
                     <Wrapper>
                         <Img src={copy} alt=''/>
-                        <Button text='Скопировать' handleClick={handleCopy}/>
+                        <Button text='Скопировать' handleClick={() => handleCopy(result)}/>
                     </Wrapper>
                 </div>
             </ContainerTextarea>
