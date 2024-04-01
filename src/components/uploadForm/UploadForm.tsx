@@ -2,7 +2,7 @@ import React from "react";
 import {createWorker} from "tesseract.js";
 import styled from "styled-components";
 import {useAppDispatch, useAppSelector} from "store/hook.ts";
-import {setFile, setResultText, setStatus} from "store/Slice/InfoSlice.ts";
+import {clearInfo, setFile, setResultText, setStatus} from "store/Slice/InfoSlice.ts";
 import {SectionUpload, ResultImg} from "components";
 import {useNavigate} from "react-router-dom";
 import {toast} from 'react-toastify';
@@ -43,6 +43,7 @@ export const UploadForm = () => {
         if (selectedImage && language) {
             convertImageToText();
             navigate("/result");
+            dispatch(clearInfo());
         }
     }
     return (

@@ -5,10 +5,10 @@ import styled from "styled-components";
 
 export const ResultImg = () => {
     const dispatch = useAppDispatch()
-    const selectedImage = useAppSelector(state => state.info.selectedImage)!;
+    const selectedImage = useAppSelector(state => state.info.selectedImage);
     return (
         <WrapperImg>
-            <img src={URL.createObjectURL(selectedImage)} alt="Photo"/>
+            {selectedImage && <img src={URL.createObjectURL(selectedImage)} alt="Photo"/>}
             <DeleteButton onClick={() => dispatch(clearInfo())}>
                 <img src={close} alt="close"/>
             </DeleteButton>
